@@ -17,6 +17,7 @@ searchButton.addEventListener('click', () => {
         });
 });
 
+// Inside the displayResults function
 function displayResults(docs) {
     resultsDiv.innerHTML = '';
 
@@ -39,6 +40,8 @@ function displayResults(docs) {
         yearElement.textContent = `Year: ${year}`;
 
         const coverElement = document.createElement('img');
+        coverElement.classList.add('cover'); // Add this line
+        
         if (coverId) {
             coverElement.src = `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
             coverElement.alt = `${title} Cover`;
