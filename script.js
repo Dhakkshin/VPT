@@ -58,6 +58,7 @@ function displayResults(docs) {
         resultsDiv.appendChild(resultDiv);
     });
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchTopRatedBooks();
     setupFilters();
@@ -76,6 +77,10 @@ function setupFilters() {
 function fetchTopRatedBooks() {
     const topRatedDiv = document.getElementById('topRated');
     topRatedDiv.innerHTML = 'Loading...';
+
+    const filterAuthor = document.getElementById('filterAuthor'); // Define filterAuthor here
+    const filterGenre = document.getElementById('filterGenre'); // Define filterGenre here
+    const filterYear = document.getElementById('filterYear'); // Define filterYear here
 
     let url = 'https://openlibrary.org/works.json?type=/type/work&sort=popular';
     
