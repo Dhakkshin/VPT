@@ -43,7 +43,7 @@ function displayResults(docs) {
             coverElement.src = `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
             coverElement.alt = `${title} Cover`;
         } else {
-            coverElement.src = 'placeholder.jpg'; // You can provide a placeholder image
+            coverElement.src = 'white-book-cover-dark_125540-753.jpg'; // You can provide a placeholder image
             coverElement.alt = 'No Cover Available';
         }
 
@@ -55,3 +55,43 @@ function displayResults(docs) {
         resultsDiv.appendChild(resultDiv);
     });
 }
+document.addEventListener('DOMContentLoaded', () => {
+    fetchTopRatedBooks();
+    setupFilters();
+});
+
+function setupFilters() {
+    const filterAuthor = document.getElementById('filterAuthor');
+    const filterGenre = document.getElementById('filterGenre');
+    const filterYear = document.getElementById('filterYear');
+
+    filterAuthor.addEventListener('change', fetchTopRatedBooks);
+    filterGenre.addEventListener('change', fetchTopRatedBooks);
+    filterYear.addEventListener('change', fetchTopRatedBooks);
+}
+
+function fetchTopRatedBooks() {
+    const topRatedDiv = document.getElementById('topRated');
+    topRatedDiv.innerHTML = 'Loading...';
+
+    let url = 'https://openlibrary.org/works.json?type=/type/work&sort=popular';
+    
+    if (filterAuthor.checked) {
+        url += '&author=AuthorName';
+    }
+    if (filterGenre.checked) {
+        url += '&subject=GenreName';
+    }
+    if (filterYear.checked) {
+        url += '&publish_date=Year';
+    }
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => displayTopRatedBooks(data.entries))
+        .catch(error => {
+            console.error('Error fetching top rated books:', error);
+            topRatedDiv.innerHTML = 'An error occurred.';
+        });
+}
+
